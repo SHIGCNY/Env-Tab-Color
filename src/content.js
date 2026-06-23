@@ -112,7 +112,10 @@
   }
 
   // 配置变化实时重渲染
-  chrome.storage.onChanged.addListener(function () { getConfig().then(recompute); });
+  chrome.storage.onChanged.addListener(function () {
+    if (document.readyState === 'loading') return; // DOM 未就绪，等 init 时再渲染
+    getConfig().then(recompute);
+  });
 
   // SPA 路由变化：URL 变了重新计算
   let lastHref = location.href;
