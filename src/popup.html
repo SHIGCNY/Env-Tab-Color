@@ -9,10 +9,20 @@
     .none { background: #9ca3af; }
     .toggles label { display: block; margin: 4px 0; }
     a { display: block; margin-top: 10px; font-size: 12px; }
+    .addrow { display: flex; gap: 6px; margin-bottom: 6px; }
+    .addrow select { flex: 1; padding: 4px; }
+    .addrow button { padding: 4px 8px; cursor: pointer; }
+    .muted { color: #888; font-size: 11px; margin-bottom: 10px; word-break: break-all; }
+    button:disabled { cursor: not-allowed; opacity: 0.5; }
   </style>
 </head>
 <body>
   <div id="env" class="env none">未匹配</div>
+  <div class="addrow" id="addRow">
+    <select id="envSelect"></select>
+    <button id="addCurrent">添加当前页 →</button>
+  </div>
+  <div class="muted" id="addHint"></div>
   <div class="toggles" id="features"></div>
   <a href="#" id="openOptions">打开设置 →</a>
 
