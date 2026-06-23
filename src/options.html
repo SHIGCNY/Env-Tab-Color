@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>环境标签着色 — 设置</title>
+  <style>
+    body { font: 14px system-ui, sans-serif; max-width: 720px; margin: 24px auto; padding: 0 16px; }
+    h2 { margin-top: 28px; }
+    .row { display: flex; gap: 8px; align-items: center; margin: 6px 0; }
+    input[type=text] { flex: 1; padding: 6px 8px; }
+    select { padding: 6px; }
+    button { padding: 6px 10px; cursor: pointer; }
+    .muted { color: #888; font-size: 12px; }
+    ul { list-style: none; padding: 0; }
+    .toggles label { margin-right: 16px; }
+  </style>
+</head>
+<body>
+  <h1>环境标签着色 — 设置</h1>
+
+  <h2>标记方式</h2>
+  <div class="toggles" id="features"></div>
+
+  <h2>环境</h2>
+  <p class="muted">名称 + 颜色，可增删。</p>
+  <ul id="envList"></ul>
+  <button id="addEnv">+ 新增环境</button>
+
+  <h2>规则</h2>
+  <p class="muted">URL 模式（支持通配符 *），从上到下第一条命中生效。</p>
+  <ul id="ruleList"></ul>
+  <button id="addRule">+ 新增规则</button>
+
+  <script src="match.js"></script>
+  <script src="storage.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
