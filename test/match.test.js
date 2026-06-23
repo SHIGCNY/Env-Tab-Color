@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { matchEnvironment } = require('../src/match.js');
+const { matchEnvironment, hostFromUrl } = require('../src/match.js');
 
 const envs = [
   { id: 'e-dev', name: 'dev', color: '#22c55e' },
@@ -75,4 +75,35 @@ test('同时含空格与通配符：空格字面、*通配', () => {
   assert.strictEqual(matchEnvironment('https://aXXXb.com/', rules, envs), null);
   // 空格按字面、* 通配，应命中 'a XXXb'
   assert.strictEqual(matchEnvironment('a XXXb', rules, envs).id, 'e-dev');
+});
+
+test('hostFromUrl 普通域名', () => {
+  assert.strictEqual(hostFromUrl('https://test.example.com/login'), 'test.example.com');
+});
+
+test('hostFromUrl 带端口', () => {
+  assert.strictEqual(hostFromUrl('http://192.168.1.20:8080/x?y=1'), '192.168.1.20:8080');
+});
+
+test('hostFromUrl 带路径/查询/锚点只取 host', () => {
+  assert.strictEqual(hostFromUrl('https://a.test.com/p/q?k=v#h'), 'a.test.com');
+});
+
+test('hostFromUrl 区分子域', () => {
+  assert.notStrictEqual(hostFromUrl('https://a.test.com/'), hostFromUrl('https://b.test.com/'));
+  assert.strictEqual(hostFromUrl('https://a.test.com/'), 'a.test.com');
+  assert.strictEqual(hostFromUrl('https://b.test.com/'), 'b.test.com');
+});
+
+test('hostFromUrl 默认端口不带端口', () => {
+  assert.strictEqual(hostFromUrl('https://test.example.com:443/'), 'test.example.com');
+});
+
+test('hostFromUrl 非 http(s) 返回 null', () => {
+  assert.strictEqual(hostFromUrl('chrome://extensions'), null);
+});
+
+test('hostFromUrl 非法或空 URL 返回 null', () => {
+  assert.strictEqual(hostFromUrl(''), null);
+  assert.strictEqual(hostFromUrl('not a url'), null);
 });

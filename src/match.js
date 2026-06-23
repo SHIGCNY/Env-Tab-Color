@@ -27,5 +27,16 @@
     return null;
   }
 
-  return { matchEnvironment, patternToRegExp };
+  function hostFromUrl(url) {
+    if (!url) return null;
+    try {
+      const u = new URL(url);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+      return u.host;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  return { matchEnvironment, patternToRegExp, hostFromUrl };
 });
