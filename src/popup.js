@@ -3,7 +3,7 @@
   const { getConfig, setConfig, newId } = globalThis.EnvStorage;
 
   const FEATURE_LABELS = {
-    border: '页面色条', favicon: '彩色 favicon', title: '标题前缀', badge: '图标徽章'
+    border: '页面色条', title: '标题前缀', badge: '图标徽章'
   };
 
   // 取当前活动标签，回调 (tab) —— tab 可能为 undefined
