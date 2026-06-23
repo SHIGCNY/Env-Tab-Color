@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>环境标签着色</title>
+  <style>
+    body { font: 13px system-ui, sans-serif; width: 240px; margin: 0; padding: 12px; }
+    .env { font-weight: 700; padding: 6px 8px; border-radius: 6px; color: #fff; text-align: center; margin-bottom: 10px; }
+    .none { background: #9ca3af; }
+    .toggles label { display: block; margin: 4px 0; }
+    a { display: block; margin-top: 10px; font-size: 12px; }
+    .addrow { display: flex; gap: 6px; margin-bottom: 6px; }
+    .addrow select { flex: 1; padding: 4px; }
+    .addrow button { padding: 4px 8px; cursor: pointer; }
+    .muted { color: #888; font-size: 11px; margin-bottom: 10px; word-break: break-all; }
+    button:disabled { cursor: not-allowed; opacity: 0.5; }
+  </style>
+</head>
+<body>
+  <div id="env" class="env none">未匹配</div>
+  <div class="addrow" id="addRow">
+    <select id="envSelect"></select>
+    <button id="addCurrent">添加当前页 →</button>
+  </div>
+  <div class="muted" id="addHint"></div>
+  <div class="toggles" id="features"></div>
+  <a href="#" id="openOptions">打开设置 →</a>
+
+  <script src="match.js"></script>
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
