@@ -10,7 +10,8 @@
       { id: 'e-prod', name: 'prod', color: '#ef4444' }
     ],
     rules: [],
-    features: { border: true, title: true, badge: true }
+    features: { border: true, title: true, badge: true },
+    position: 'bottom-left'
   };
 
   function getConfig() {

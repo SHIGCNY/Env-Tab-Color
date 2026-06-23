@@ -6,8 +6,14 @@
     border: '页面色条', title: '标题前缀', badge: '图标徽章'
   };
 
+  const POSITION_LABELS = {
+    'top-left': '左上', 'top-right': '右上',
+    'bottom-left': '左下', 'bottom-right': '右下'
+  };
+
   function save() { return setConfig({
-    environments: cfg.environments, rules: cfg.rules, features: cfg.features
+    environments: cfg.environments, rules: cfg.rules, features: cfg.features,
+    position: cfg.position
   }); }
 
   function renderFeatures() {
@@ -91,7 +97,19 @@
     });
   }
 
-  function render() { renderFeatures(); renderEnvs(); renderRules(); }
+  function renderPosition() {
+    const sel = document.getElementById('position');
+    sel.innerHTML = '';
+    Object.keys(POSITION_LABELS).forEach(function (key) {
+      const opt = document.createElement('option');
+      opt.value = key; opt.textContent = POSITION_LABELS[key];
+      if (key === cfg.position) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.onchange = function () { cfg.position = sel.value; save(); };
+  }
+
+  function render() { renderFeatures(); renderPosition(); renderEnvs(); renderRules(); }
 
   document.getElementById('addEnv').addEventListener('click', function () {
     cfg.environments.push({ id: newId('e'), name: 'new', color: '#3b82f6' });
