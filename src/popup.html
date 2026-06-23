@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>环境标签着色</title>
+  <style>
+    body { font: 13px system-ui, sans-serif; width: 240px; margin: 0; padding: 12px; }
+    .env { font-weight: 700; padding: 6px 8px; border-radius: 6px; color: #fff; text-align: center; margin-bottom: 10px; }
+    .none { background: #9ca3af; }
+    .toggles label { display: block; margin: 4px 0; }
+    a { display: block; margin-top: 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="env" class="env none">未匹配</div>
+  <div class="toggles" id="features"></div>
+  <a href="#" id="openOptions">打开设置 →</a>
+
+  <script src="match.js"></script>
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
