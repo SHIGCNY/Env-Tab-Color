@@ -1,7 +1,7 @@
 importScripts('match.js', 'storage.js');
 
 const { matchEnvironment } = self.EnvMatch;
-const { getConfig, DEFAULTS } = self.EnvStorage;
+const { getConfig } = self.EnvStorage;
 
 // 首次安装写入默认配置（不覆盖已有值）
 chrome.runtime.onInstalled.addListener(function () {

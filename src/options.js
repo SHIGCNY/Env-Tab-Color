@@ -74,13 +74,19 @@
         const t = cfg.rules[idx - 1]; cfg.rules[idx - 1] = rule; cfg.rules[idx] = t;
         save().then(render);
       });
+      const down = document.createElement('button');
+      down.textContent = '↓'; down.disabled = idx === cfg.rules.length - 1;
+      down.addEventListener('click', function () {
+        const t = cfg.rules[idx + 1]; cfg.rules[idx + 1] = rule; cfg.rules[idx] = t;
+        save().then(render);
+      });
       const del = document.createElement('button');
       del.textContent = '删除';
       del.addEventListener('click', function () {
         cfg.rules = cfg.rules.filter(function (r) { return r.id !== rule.id; });
         save().then(render);
       });
-      li.append(pattern, sel, up, del);
+      li.append(pattern, sel, up, down, del);
       ul.appendChild(li);
     });
   }
