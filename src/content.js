@@ -79,7 +79,7 @@
     if (titleObserver) { titleObserver.disconnect(); titleObserver = null; }
     if (features.title && env) {
       baseTitle = stripPrefix(document.title);
-      const prefix = '\u{1F534}[' + env.name.toUpperCase() + '] ';
+      const prefix = '[' + env.name.toUpperCase() + '] ';
       document.title = prefix + baseTitle;
       const titleEl = document.querySelector('title');
       if (titleEl) {
