@@ -68,3 +68,11 @@ test('通配符路径大小写不敏感', () => {
   const env = matchEnvironment('https://app.dev.example.com/', rules, envs);
   assert.strictEqual(env.id, 'e-dev');
 });
+
+test('同时含空格与通配符：空格字面、*通配', () => {
+  const rules = [{ id: 'r1', pattern: 'a *b', envId: 'e-dev' }];
+  // 旧实现会把字面空格也当通配符从而误命中 'aXXXb'，新实现不应命中
+  assert.strictEqual(matchEnvironment('https://aXXXb.com/', rules, envs), null);
+  // 空格按字面、* 通配，应命中 'a XXXb'
+  assert.strictEqual(matchEnvironment('a XXXb', rules, envs).id, 'e-dev');
+});
