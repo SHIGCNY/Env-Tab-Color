@@ -57,3 +57,14 @@ test('特殊正则字符按字面处理', () => {
   const env = matchEnvironment('https://a.b+c.com/', rules, envs);
   assert.strictEqual(env.id, 'e-dev');
 });
+
+test('pattern 中的字面空格按字面处理（不当作通配符）', () => {
+  const rules = [{ id: 'r1', pattern: 'my domain.com', envId: 'e-dev' }];
+  assert.strictEqual(matchEnvironment('https://myXdomain.com/', rules, envs), null);
+});
+
+test('通配符路径大小写不敏感', () => {
+  const rules = [{ id: 'r1', pattern: '*.DEV.example.com', envId: 'e-dev' }];
+  const env = matchEnvironment('https://app.dev.example.com/', rules, envs);
+  assert.strictEqual(env.id, 'e-dev');
+});

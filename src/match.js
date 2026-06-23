@@ -5,10 +5,8 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   // 把含通配符 * 的 pattern 编译成正则；其余字符按字面转义
   function patternToRegExp(pattern) {
-    const escaped = pattern.replace(/[.*+?^${}()|[\]\\]/g, function (ch) {
-      return ch === '*' ? ' ' : '\\' + ch; // 先占位保留 *
-    });
-    const withWildcard = escaped.split(' ').join('.*');
+    const escaped = pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+    const withWildcard = escaped.replace(/\*/g, '.*');
     return new RegExp(withWildcard, 'i');
   }
 
