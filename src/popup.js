@@ -72,18 +72,21 @@
   }
 
   // 点击添加：去重更新 envId，否则顶端插入新规则
-  function addCurrent(cfg, host) {
+  function addCurrent(cfg, host, tab) {
     if (!host) return;
     const envId = document.getElementById('envSelect').value;
+    if (!envId) return; // 没有可选环境时不写入无效规则
+    const btn = document.getElementById('addCurrent');
     const existing = cfg.rules.find(function (r) { return r.pattern === host; });
     if (existing) {
       existing.envId = envId;
     } else {
       cfg.rules.unshift({ id: newId('r'), pattern: host, envId: envId });
     }
+    btn.disabled = true; // 保存期间锁住按钮，避免并发写
     setConfig({ rules: cfg.rules }).then(function () {
-      // 保存后重渲染当前环境块反映新归类
-      withActiveTab(function (tab) { renderEnv(cfg, tab); });
+      btn.disabled = false;
+      renderEnv(cfg, tab); // 复用已捕获的 tab，无需再 query
     });
   }
 
@@ -100,7 +103,7 @@
       renderEnvSelect(cfg, tab);
       renderAddRow(host);
       document.getElementById('addCurrent').addEventListener('click', function () {
-        addCurrent(cfg, host);
+        addCurrent(cfg, host, tab);
       });
     });
   });
