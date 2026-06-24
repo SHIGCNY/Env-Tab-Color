@@ -11,7 +11,8 @@
     ],
     rules: [],
     features: { border: true, title: true, badge: true },
-    position: 'bottom-left'
+    position: 'bottom-left',
+    appearance: { fontSize: 28, opacity: 0.25 }
   };
 
   function getConfig() {
@@ -19,6 +20,7 @@
       chrome.storage.sync.get(DEFAULTS, function (cfg) {
         // 合并 features，避免新增开关项缺字段
         cfg.features = Object.assign({}, DEFAULTS.features, cfg.features || {});
+        cfg.appearance = Object.assign({}, DEFAULTS.appearance, cfg.appearance || {});
         resolve(cfg);
       });
     });
@@ -34,5 +36,13 @@
     return prefix + '-' + Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36);
   }
 
-  return { DEFAULTS, getConfig, setConfig, newId };
+  // 色条整体随字号按比例缩放（28px 基准：padding 12/24、圆角 16）
+  function barStyleFromSize(fontSize) {
+    return {
+      padding: Math.round(fontSize * 3 / 7) + 'px ' + Math.round(fontSize * 6 / 7) + 'px',
+      borderRadius: Math.round(fontSize * 4 / 7) + 'px'
+    };
+  }
+
+  return { DEFAULTS, getConfig, setConfig, newId, barStyleFromSize };
 });
