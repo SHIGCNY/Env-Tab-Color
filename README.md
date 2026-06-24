@@ -85,5 +85,4 @@ node --test test/match.test.js
 |------|------|
 | `storage` | 保存配置（环境、规则、开关、位置） |
 | `tabs` | 读取标签页 URL 以更新图标徽章 |
-| `scripting` | 内容脚本注入相关 |
 | `<all_urls>` | 需要在任意站点上判断环境并着色 |
