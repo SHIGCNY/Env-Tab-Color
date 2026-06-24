@@ -1,6 +1,6 @@
 (function () {
   const { matchEnvironment } = globalThis.EnvMatch;
-  const { getConfig } = globalThis.EnvStorage;
+  const { getConfig, barStyleFromSize } = globalThis.EnvStorage;
 
   const BAR_ID = '__env_tab_color_bar__';
   // 角落定位映射：position 值 → 要设置的 CSS 边距
@@ -13,6 +13,7 @@
   let currentEnv = null;
   let features = null;
   let position = 'bottom-left';
+  let appearance = null;
   let titleObserver = null;
   let baseTitle = null;
 
@@ -24,9 +25,8 @@
       bar.id = BAR_ID;
       bar.style.cssText = [
         'position:fixed', 'z-index:2147483647', 'pointer-events:none',
-        'padding:12px 24px', 'border-radius:16px',
-        'font:600 28px/1 system-ui,sans-serif', 'letter-spacing:.5px',
-        'color:#fff', 'opacity:.25', 'box-shadow:0 1px 4px rgba(0,0,0,.25)'
+        'font-weight:600', 'line-height:1', 'font-family:system-ui,sans-serif',
+        'letter-spacing:.5px', 'color:#fff', 'box-shadow:0 1px 4px rgba(0,0,0,.25)'
       ].join(';');
       (document.documentElement || document.body).appendChild(bar);
     }
@@ -45,6 +45,11 @@
       const bar = ensureBar();
       bar.style.background = env.color;
       bar.textContent = env.name.toUpperCase();
+      bar.style.fontSize = appearance.fontSize + 'px';
+      const s = barStyleFromSize(appearance.fontSize);
+      bar.style.padding = s.padding;
+      bar.style.borderRadius = s.borderRadius;
+      bar.style.opacity = appearance.opacity;
       applyPosition(bar);
     } else {
       const bar = document.getElementById(BAR_ID);
@@ -84,6 +89,7 @@
   function recompute(cfg) {
     features = cfg.features;
     position = cfg.position || 'bottom-left';
+    appearance = cfg.appearance;
     currentEnv = matchEnvironment(location.href, cfg.rules, cfg.environments);
     render();
   }
