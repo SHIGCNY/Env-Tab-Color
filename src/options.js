@@ -13,7 +13,7 @@
 
   function save() { return setConfig({
     environments: cfg.environments, rules: cfg.rules, features: cfg.features,
-    position: cfg.position
+    position: cfg.position, appearance: cfg.appearance
   }); }
 
   function renderFeatures() {
@@ -109,7 +109,29 @@
     sel.onchange = function () { cfg.position = sel.value; save(); };
   }
 
-  function render() { renderFeatures(); renderPosition(); renderEnvs(); renderRules(); }
+  function renderAppearance() {
+    const fs = document.getElementById('fontSize');
+    const fsVal = document.getElementById('fontSizeVal');
+    fs.value = cfg.appearance.fontSize;
+    fsVal.textContent = cfg.appearance.fontSize + 'px';
+    fs.oninput = function () {
+      cfg.appearance.fontSize = Number(fs.value);
+      fsVal.textContent = fs.value + 'px';
+      save();
+    };
+    const op = document.getElementById('opacity');
+    const opVal = document.getElementById('opacityVal');
+    const pct = Math.round(cfg.appearance.opacity * 100);
+    op.value = pct;
+    opVal.textContent = pct + '%';
+    op.oninput = function () {
+      cfg.appearance.opacity = Number(op.value) / 100;
+      opVal.textContent = op.value + '%';
+      save();
+    };
+  }
+
+  function render() { renderFeatures(); renderPosition(); renderAppearance(); renderEnvs(); renderRules(); }
 
   document.getElementById('addEnv').addEventListener('click', function () {
     cfg.environments.push({ id: newId('e'), name: 'new', color: '#3b82f6' });
