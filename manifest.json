@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "环境标签着色 / Env Tab Color",
   "version": "0.1.0",
-  "description": "按 URL 规则区分 dev/test/prod 环境，用色条、favicon、标题、徽章标记当前标签页。",
-  "permissions": ["storage", "tabs", "scripting"],
+  "description": "按 URL 规则区分 dev/test/prod 环境，用页面色条、标题前缀、图标徽章标记当前标签页，避免在生产环境误操作。",
+  "permissions": ["storage", "tabs"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "src/background.js"
